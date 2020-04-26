@@ -5,6 +5,7 @@ var container = document.getElementById('itemContainer');
 var img1 = document.getElementById('product1');
 var img2 = document.getElementById('product2');
 var img3 = document.getElementById('product3');
+var listEl = document.getElementById('list');
 
 var productsArray = [];
 var clickCounter = 25;
@@ -16,26 +17,26 @@ function Product(name, src) {
   productsArray.push(this);
 }
 
-new Product('bag', '.img/bag.jpg');
-new Product('banana', '.img/banana.jpg');
-new Product('bathroom', '.img/bathroom.jpg');
-new Product('boots', '.img/boots.jpg');
-new Product('breakfast', '.img/breakfast.jpg');
-new Product('bubblegum', '.img/bubblegum.jpg');
-new Product('chair', '.img/chair.jpg');
-new Product('cthulhu', '.img/cthulhu.jpg');
-new Product('dog-duck', '.img/dog-duck.jpg');
-new Product('dragon', '.img/dragon.jpg');
-new Product('pen', '.img/pen.jpg');
-new Product('pet-sweep', '.img/pet-sweep.jpg');
-new Product('scissors', '.img/scissors.jpg');
-new Product('shark', '.img/shark.jpg');
-new Product('sweep', '.img/sweep.png');
-new Product('tauntaun', '.img/tauntaun.jpg');
-new Product('unicorn', '.img/unicorn.jpg');
-new Product('usb', '.img/usb.gif');
-new Product('water-can', '.img/water-can.jpg');
-new Product('wine-glass', '.img/wine-glass.jpg');
+new Product('bag', './img/bag.jpg');
+new Product('banana', './img/banana.jpg');
+new Product('bathroom', './img/bathroom.jpg');
+new Product('boots', './img/boots.jpg');
+new Product('breakfast', './img/breakfast.jpg');
+new Product('bubblegum', './img/bubblegum.jpg');
+new Product('chair', './img/chair.jpg');
+new Product('cthulhu', './img/cthulhu.jpg');
+new Product('dog-duck', './img/dog-duck.jpg');
+new Product('dragon', './img/dragon.jpg');
+new Product('pen', './img/pen.jpg');
+new Product('pet-sweep', './img/pet-sweep.jpg');
+new Product('scissors', './img/scissors.jpg');
+new Product('shark', './img/shark.jpg');
+new Product('sweep', './img/sweep.png');
+new Product('tauntaun', './img/tauntaun.jpg');
+new Product('unicorn', './img/unicorn.jpg');
+new Product('usb', './img/usb.gif');
+new Product('water-can', './img/water-can.jpg');
+new Product('wine-glass', './img/wine-glass.jpg');
 
 
 function randomizer(max) {
@@ -65,9 +66,17 @@ function imageGenerator() {
   img3.title = productsArray[pic3].name;
 }
 
+function generateList() {
+  for (var j = 0; j < productsArray.length; j++) {
+    var listItem = document.createElement('li');
+    listItem.textContent = `${productsArray[j].name.toUpperCase()} : ${productsArray[j].clicked} votes`;
+    listEl.appendChild(listItem);
+    console.log(listItem);
+  }
+}
+
 function stopClicking() {
   container.removeEventListener('click', handleClick);
-  container.textContent = '';
   console.log('done');
 }
 
@@ -81,6 +90,7 @@ function handleClick(event) {
   clickCounter--;
   if (clickCounter === 0) {
     stopClicking();
+    generateList();
   }
   imageGenerator();
 }
@@ -88,3 +98,4 @@ function handleClick(event) {
 container.addEventListener('click', handleClick);
 
 imageGenerator();
+
