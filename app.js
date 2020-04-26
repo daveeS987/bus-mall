@@ -13,6 +13,7 @@ var clickCounter = 25;
 function Product(name, src) {
   this.name = name;
   this.src = src;
+  this.shown = 0;
   this.clicked = 0;
   productsArray.push(this);
 }
