@@ -1,3 +1,103 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
 body {
-  background-color: aquamarine;
+  background-color: rgb(91, 91, 91);
+  font-family: 'Montserrat', sans-serif;
 }
+
+/* * {
+  outline: dotted 1px red;
+} */
+
+header, main, footer {
+  color:  rgb(206, 206, 206);
+  background-color: rgb(46, 46, 46);
+  width: 1000px;
+  margin: 20px auto;
+  overflow: auto;
+  /* outline: solid 1px blue; */
+}
+
+header, footer {
+  height: 100px;
+}
+
+h1 {
+  font-size: 40px;
+  padding: 30px 0px 30px 55px;
+}
+
+
+aside {
+  float: left;
+  width: 240px;
+  height: 600px;
+  margin: 20px;
+  overflow: auto;
+  border-right: solid 4px red;
+}
+
+ul {
+  padding: 10px;
+  width: 200px;
+  margin: 5px auto;
+  /* border: solid 1px green; */
+}
+
+li {
+  line-height: 1.5em;
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+
+h2 {
+  font-size: 30px;
+  margin: 20px;
+  text-align: center;
+  /* outline: solid 1px pink; */
+}
+
+
+div {
+  width: 700px;
+  height: 600px;
+  float: left;
+  margin: 20px auto;
+  /* outline: solid 1px red; */
+}
+
+#itemContainer {
+  width: 660px;
+  height: 280px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  /* outline: solid 1px yellow; */
+}
+
+img {
+  margin-top: 20px;
+  max-height: 200px; 
+  width: 190px;
+  margin: 10px;
+}
+
+article {
+  float: left;
+  width: 660px;
+  margin-top: 20px;
+  margin-left: 20px;
+  /* outline: solid 1px yellow; */
+}
+
+p {
+  padding: 40px;
+  font-size: 18px;
+  line-height: 1.4em;
+}
+
+footer>h1 {
+  text-align: center;
+}
+
