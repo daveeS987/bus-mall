@@ -59,18 +59,21 @@ function imageGenerator() {
 
   img1.src = productsArray[pic1].src;
   img1.title = productsArray[pic1].name;
+  productsArray[pic1].shown++;
 
   img2.src = productsArray[pic2].src;
   img2.title = productsArray[pic2].name;
+  productsArray[pic2].shown++;
 
   img3.src = productsArray[pic3].src;
   img3.title = productsArray[pic3].name;
+  productsArray[pic3].shown++;
 }
 
 function generateList() {
   for (var j = 0; j < productsArray.length; j++) {
     var listItem = document.createElement('li');
-    listItem.textContent = `${productsArray[j].name.toUpperCase()} : ${productsArray[j].clicked} votes`;
+    listItem.textContent = `${productsArray[j].name.toUpperCase()} : ${productsArray[j].clicked} votes. Shown ${productsArray[j].shown} times`;
     listEl.appendChild(listItem);
     console.log(listItem);
   }
@@ -92,6 +95,10 @@ function handleClick(event) {
   if (clickCounter === 0) {
     stopClicking();
     generateList();
+    img1.src = '';
+    img2.src = '';
+    img3.src = '';
+    return;
   }
   imageGenerator();
 }
