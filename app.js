@@ -47,15 +47,26 @@ function randomizer(max) {
   return Math.floor(Math.random() * max);
 }
 
+//////     Version 1 of Image Generator    /////
+
+// var pic1Previous;
+// var pic2Previous;
+// var pic3Previous;
+
 // function imageGenerator() {
 //   var pic1 = randomizer(productsArray.length);
 //   var pic2 = randomizer(productsArray.length);
 //   var pic3 = randomizer(productsArray.length);
 
-//   while (pic1 === pic2) {
+//   while (pic1 === pic2 || pic1 === pic3 || pic1 === pic1Previous || pic1 === pic2Previous || pic1 === pic3Previous) {
+//     pic1 = randomizer(productsArray.length);
+//   }
+
+//   while (pic2 === pic1 || pic2 === pic3 || pic2 === pic1Previous || pic2 === pic2Previous || pic2 === pic3Previous) {
 //     pic2 = randomizer(productsArray.length);
 //   }
-//   while (pic2 === pic3 || pic1 === pic3) {
+
+//   while (pic3 === pic2 || pic3 === pic1 || pic3 === pic1Previous || pic3 === pic2Previous || pic3 === pic3Previous) {
 //     pic3 = randomizer(productsArray.length);
 //   }
 
@@ -70,6 +81,10 @@ function randomizer(max) {
 //   img3.src = productsArray[pic3].src;
 //   img3.title = productsArray[pic3].name;
 //   productsArray[pic3].shown++;
+
+//   pic1Previous = pic1;
+//   pic2Previous = pic2;
+//   pic3Previous = pic3;
 // }
 
 var generateArrayOfIndex = function () {
@@ -141,16 +156,18 @@ function handleClick(event) {
     footer.textContent = '';
     renderChart();
   }
+  // imageGenerator();
   imageGeneratorV2();
 }
 
 container.addEventListener('click', handleClick);
+// imageGenerator();
 imageGeneratorV2();
 
 
 
-// seed Data
 
+// seed Data
 function getDataChart() {
   var namesArray = [];
   var clickedArray = [];
