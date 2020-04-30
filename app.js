@@ -44,15 +44,24 @@ function randomizer(max) {
   return Math.floor(Math.random() * max);
 }
 
-var arrayOfIndex = function () {
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+var generateArrayOfIndex = function () {
   var array = [];
   for (var i = 0; i < productsArray.length; i++) {
     array.push(i);
   }
   return array;
-}();
+};
 
+var arrayOfIndex = generateArrayOfIndex();
 var arrayOfIndexCopy = arrayOfIndex;
+console.log(arrayOfIndex.length, arrayOfIndexCopy.length);
 
 function imageGeneratorV2() {
   // copy array of index
@@ -68,20 +77,35 @@ function imageGeneratorV2() {
 
   // otherwise
   // copy of array is reassigned the value of array of index
+
   while (arrayOfIndexCopy.length < 3) {
-    arrayOfIndexCopy = arrayOfIndex;
+    arrayOfIndexCopy = generateArrayOfIndex();
+    console.log('after while: ' + arrayOfIndexCopy);
   }
-  var index1 = randomizer(arrayOfIndexCopy.length);
+
+  // var index1 = randomizer(arrayOfIndexCopy.length-1);
+  var index1 = getRandomIntInclusive(0, arrayOfIndexCopy.length-1);
+  var pic1 = arrayOfIndexCopy[index1];
   arrayOfIndexCopy.splice(index1, 1);
-  var pic1 = productsArray[index1];
+  console.log('index1: ' + index1);
+  console.log('pic1: ' + pic1);
+  console.log('arrayOfIndexCopy: ' + arrayOfIndexCopy);
 
-  var index2 = randomizer(arrayOfIndexCopy.length);
+  var index2 = getRandomIntInclusive(0, arrayOfIndexCopy.length-1);
+  var pic2 = arrayOfIndexCopy[index2];
   arrayOfIndexCopy.splice(index2, 1);
-  var pic2 = productsArray[index1];
+  console.log('index2: ' + index2);
+  console.log('pic2: ' + pic2);
+  console.log('arrayOfIndexCopy: ' + arrayOfIndexCopy);
 
-  var index3 = randomizer(arrayOfIndexCopy.length);
+  var index3 = getRandomIntInclusive(0, arrayOfIndexCopy.length-1);
+  var pic3 = arrayOfIndexCopy[index3];
   arrayOfIndexCopy.splice(index3, 1);
-  var pic3 = productsArray[index3];
+  console.log('index3: ' + index3);
+  console.log('pic3: ' + pic3);
+  console.log('arrayOfIndexCopy: ' + arrayOfIndexCopy);
+  console.log('-------------------------------');
+
 
   img1.src = productsArray[pic1].src;
   img1.title = productsArray[pic1].name;
@@ -94,6 +118,8 @@ function imageGeneratorV2() {
   img3.src = productsArray[pic3].src;
   img3.title = productsArray[pic3].name;
   productsArray[pic3].shown++;
+
+
 }
 
 console.log('arrayOfIndex: ' + arrayOfIndex);
@@ -155,10 +181,10 @@ function handleClick(event) {
     img3.src = '';
     return;
   }
-  imageGenerator();
+  imageGeneratorV2();
 }
 
 container.addEventListener('click', handleClick);
 
-imageGenerator();
+imageGeneratorV2();
 
