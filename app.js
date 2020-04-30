@@ -6,6 +6,9 @@ var img1 = document.getElementById('product1');
 var img2 = document.getElementById('product2');
 var img3 = document.getElementById('product3');
 var listEl = document.getElementById('list');
+var main = document.getElementById('main');
+var footer = document.getElementById('footer');
+
 
 var productsArray = [];
 var clickCounter = 25;
@@ -44,13 +47,6 @@ function randomizer(max) {
   return Math.floor(Math.random() * max);
 }
 
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-
 // function imageGenerator() {
 //   var pic1 = randomizer(productsArray.length);
 //   var pic2 = randomizer(productsArray.length);
@@ -76,8 +72,6 @@ function getRandomIntInclusive(min, max) {
 //   productsArray[pic3].shown++;
 // }
 
-
-
 var generateArrayOfIndex = function () {
   var array = [];
   for (var i = 0; i < productsArray.length; i++) {
@@ -87,22 +81,20 @@ var generateArrayOfIndex = function () {
 };
 var arrayOfIndex = generateArrayOfIndex();
 
-
 function imageGeneratorV2() {
   while (arrayOfIndex.length < 3) {
     arrayOfIndex = generateArrayOfIndex();
-    console.log('after while: ' + arrayOfIndex);
   }
 
-  var index1 = getRandomIntInclusive(0, arrayOfIndex.length-1);
+  var index1 = randomizer(arrayOfIndex.length);
   var pic1 = arrayOfIndex[index1];
   arrayOfIndex.splice(index1, 1);
 
-  var index2 = getRandomIntInclusive(0, arrayOfIndex.length-1);
+  var index2 = randomizer(arrayOfIndex.length);
   var pic2 = arrayOfIndex[index2];
   arrayOfIndex.splice(index2, 1);
 
-  var index3 = getRandomIntInclusive(0, arrayOfIndex.length-1);
+  var index3 = randomizer(arrayOfIndex.length);
   var pic3 = arrayOfIndex[index3];
   arrayOfIndex.splice(index3, 1);
 
@@ -120,34 +112,11 @@ function imageGeneratorV2() {
 }
 
 
-
-
-// var productsArrayCopy = productsArray;
-// function imageGeneratorV3() {
-
-
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function generateList() {
   for (var j = 0; j < productsArray.length; j++) {
     var listItem = document.createElement('li');
     listItem.textContent = `${productsArray[j].name.toUpperCase()} : ${productsArray[j].clicked} votes. Shown ${productsArray[j].shown} times`;
     listEl.appendChild(listItem);
-    console.log(listItem);
   }
 }
 
@@ -167,15 +136,67 @@ function handleClick(event) {
   if (clickCounter === 0) {
     stopClicking();
     generateList();
-    img1.src = '';
-    img2.src = '';
-    img3.src = '';
-    return;
+    // container.textContent = '';
+    main.textContent = '';
+    footer.textContent = '';
+    renderChart();
   }
   imageGeneratorV2();
 }
 
 container.addEventListener('click', handleClick);
-
 imageGeneratorV2();
 
+
+
+// seed Data
+
+function getDataChart() {
+  var namesArray = [];
+  var clickedArray = [];
+  var displayedArray = [];
+  var clickedColorArray = [];
+  var displayedColorArray = [];
+
+  for (var i = 0; i < productsArray.length; i++) {
+    namesArray.push(productsArray[i].name);
+    clickedArray.push(productsArray[i].clicked);
+    displayedArray.push(productsArray[i].shown);
+    clickedColorArray.push('rgba(255, 99, 132, 0.2)');
+    displayedColorArray.push('rgba(54, 162, 235, 0.2)');
+  }
+  return [namesArray, clickedArray, displayedArray, clickedColorArray, displayedColorArray];
+}
+
+function renderChart() {
+  var ctx = document.getElementById('myChart');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: getDataChart()[0],
+      datasets: [{
+        label: '# of Clicks',
+        data: getDataChart()[1],
+        backgroundColor: getDataChart()[3],
+        borderColor: getDataChart()[3],
+        borderWidth: 1
+      },
+      {
+        label: '# of Views',
+        data: getDataChart()[2],
+        backgroundColor: getDataChart()[4],
+        borderColor: getDataChart()[4],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
