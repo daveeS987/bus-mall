@@ -40,9 +40,9 @@ new Product('water-can', './img/water-can.jpg');
 new Product('wine-glass', './img/wine-glass.jpg');
 
 
-function randomizer(max) {
-  return Math.floor(Math.random() * max);
-}
+// function randomizer(max) {
+//   return Math.floor(Math.random() * max);
+// }
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -58,54 +58,32 @@ var generateArrayOfIndex = function () {
   }
   return array;
 };
-
 var arrayOfIndex = generateArrayOfIndex();
-var arrayOfIndexCopy = arrayOfIndex;
-console.log(arrayOfIndex.length, arrayOfIndexCopy.length);
+var copyArrayOfIndex = [1, 2];
+copyArrayOfIndex = arrayOfIndex;
+console.log('copyArrayOfIndex: ' + copyArrayOfIndex);
 
 function imageGeneratorV2() {
-  // copy array of index
 
-  // if copy of indexArray length is more than 3
-  // take array of index
-  // assign pic1 with random number through array of index
-  // splice that number out
-  // assign2 pic2 with random number through array of index
-  // splice that out
-  // assign pic3 with random number through array
-  // splice that out
-
-  // otherwise
-  // copy of array is reassigned the value of array of index
-
-  while (arrayOfIndexCopy.length < 3) {
-    arrayOfIndexCopy = generateArrayOfIndex();
-    console.log('after while: ' + arrayOfIndexCopy);
+  while (arrayOfIndex.length < 3) {
+    arrayOfIndex = generateArrayOfIndex();
+    console.log('after while: ' + arrayOfIndex);
   }
 
-  // var index1 = randomizer(arrayOfIndexCopy.length-1);
-  var index1 = getRandomIntInclusive(0, arrayOfIndexCopy.length-1);
-  var pic1 = arrayOfIndexCopy[index1];
-  arrayOfIndexCopy.splice(index1, 1);
-  console.log('index1: ' + index1);
-  console.log('pic1: ' + pic1);
-  console.log('arrayOfIndexCopy: ' + arrayOfIndexCopy);
+  var index1 = getRandomIntInclusive(0, arrayOfIndex.length-1);
+  var pic1 = arrayOfIndex[index1];
+  arrayOfIndex.splice(index1, 1);
+  console.log('arrayOfIndex: ' + arrayOfIndex);
 
-  var index2 = getRandomIntInclusive(0, arrayOfIndexCopy.length-1);
-  var pic2 = arrayOfIndexCopy[index2];
-  arrayOfIndexCopy.splice(index2, 1);
-  console.log('index2: ' + index2);
-  console.log('pic2: ' + pic2);
-  console.log('arrayOfIndexCopy: ' + arrayOfIndexCopy);
+  var index2 = getRandomIntInclusive(0, arrayOfIndex.length-1);
+  var pic2 = arrayOfIndex[index2];
+  arrayOfIndex.splice(index2, 1);
+  console.log('arrayOfIndex: ' + arrayOfIndex);
 
-  var index3 = getRandomIntInclusive(0, arrayOfIndexCopy.length-1);
-  var pic3 = arrayOfIndexCopy[index3];
-  arrayOfIndexCopy.splice(index3, 1);
-  console.log('index3: ' + index3);
-  console.log('pic3: ' + pic3);
-  console.log('arrayOfIndexCopy: ' + arrayOfIndexCopy);
-  console.log('-------------------------------');
-
+  var index3 = getRandomIntInclusive(0, arrayOfIndex.length-1);
+  var pic3 = arrayOfIndex[index3];
+  arrayOfIndex.splice(index3, 1);
+  console.log('arrayOfIndex: ' + arrayOfIndex);
 
   img1.src = productsArray[pic1].src;
   img1.title = productsArray[pic1].name;
@@ -118,12 +96,7 @@ function imageGeneratorV2() {
   img3.src = productsArray[pic3].src;
   img3.title = productsArray[pic3].name;
   productsArray[pic3].shown++;
-
-
 }
-
-console.log('arrayOfIndex: ' + arrayOfIndex);
-console.log('arrayOfIndexCopy: ' + arrayOfIndexCopy);
 
 
 // function imageGenerator() {
