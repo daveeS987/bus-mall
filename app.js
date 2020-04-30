@@ -6,6 +6,9 @@ var img1 = document.getElementById('product1');
 var img2 = document.getElementById('product2');
 var img3 = document.getElementById('product3');
 var listEl = document.getElementById('list');
+var main = document.getElementById('main');
+var footer = document.getElementById('footer');
+
 
 var productsArray = [];
 var clickCounter = 25;
@@ -44,18 +47,56 @@ function randomizer(max) {
   return Math.floor(Math.random() * max);
 }
 
-function imageGenerator() {
-  var pic1 = randomizer(productsArray.length);
-  var pic2 = randomizer(productsArray.length);
-  var pic3 = randomizer(productsArray.length);
+// function imageGenerator() {
+//   var pic1 = randomizer(productsArray.length);
+//   var pic2 = randomizer(productsArray.length);
+//   var pic3 = randomizer(productsArray.length);
 
-  while (pic1 === pic2) {
-    pic2 = randomizer(productsArray.length);
+//   while (pic1 === pic2) {
+//     pic2 = randomizer(productsArray.length);
+//   }
+//   while (pic2 === pic3 || pic1 === pic3) {
+//     pic3 = randomizer(productsArray.length);
+//   }
+
+//   img1.src = productsArray[pic1].src;
+//   img1.title = productsArray[pic1].name;
+//   productsArray[pic1].shown++;
+
+//   img2.src = productsArray[pic2].src;
+//   img2.title = productsArray[pic2].name;
+//   productsArray[pic2].shown++;
+
+//   img3.src = productsArray[pic3].src;
+//   img3.title = productsArray[pic3].name;
+//   productsArray[pic3].shown++;
+// }
+
+var generateArrayOfIndex = function () {
+  var array = [];
+  for (var i = 0; i < productsArray.length; i++) {
+    array.push(i);
   }
-  while (pic2 === pic3 || pic1 === pic3) {
-    pic3 = randomizer(productsArray.length);
+  return array;
+};
+var arrayOfIndex = generateArrayOfIndex();
+
+function imageGeneratorV2() {
+  while (arrayOfIndex.length < 3) {
+    arrayOfIndex = generateArrayOfIndex();
   }
-  console.log(pic1, pic2, pic3);
+
+  var index1 = randomizer(arrayOfIndex.length);
+  var pic1 = arrayOfIndex[index1];
+  arrayOfIndex.splice(index1, 1);
+
+  var index2 = randomizer(arrayOfIndex.length);
+  var pic2 = arrayOfIndex[index2];
+  arrayOfIndex.splice(index2, 1);
+
+  var index3 = randomizer(arrayOfIndex.length);
+  var pic3 = arrayOfIndex[index3];
+  arrayOfIndex.splice(index3, 1);
 
   img1.src = productsArray[pic1].src;
   img1.title = productsArray[pic1].name;
@@ -70,12 +111,12 @@ function imageGenerator() {
   productsArray[pic3].shown++;
 }
 
+
 function generateList() {
   for (var j = 0; j < productsArray.length; j++) {
     var listItem = document.createElement('li');
     listItem.textContent = `${productsArray[j].name.toUpperCase()} : ${productsArray[j].clicked} votes. Shown ${productsArray[j].shown} times`;
     listEl.appendChild(listItem);
-    console.log(listItem);
   }
 }
 
@@ -95,15 +136,67 @@ function handleClick(event) {
   if (clickCounter === 0) {
     stopClicking();
     generateList();
-    img1.src = '';
-    img2.src = '';
-    img3.src = '';
-    return;
+    // container.textContent = '';
+    main.textContent = '';
+    footer.textContent = '';
+    renderChart();
   }
-  imageGenerator();
+  imageGeneratorV2();
 }
 
 container.addEventListener('click', handleClick);
+imageGeneratorV2();
 
-imageGenerator();
 
+
+// seed Data
+
+function getDataChart() {
+  var namesArray = [];
+  var clickedArray = [];
+  var displayedArray = [];
+  var clickedColorArray = [];
+  var displayedColorArray = [];
+
+  for (var i = 0; i < productsArray.length; i++) {
+    namesArray.push(productsArray[i].name);
+    clickedArray.push(productsArray[i].clicked);
+    displayedArray.push(productsArray[i].shown);
+    clickedColorArray.push('rgba(255, 99, 132, 0.2)');
+    displayedColorArray.push('rgba(54, 162, 235, 0.2)');
+  }
+  return [namesArray, clickedArray, displayedArray, clickedColorArray, displayedColorArray];
+}
+
+function renderChart() {
+  var ctx = document.getElementById('myChart');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: getDataChart()[0],
+      datasets: [{
+        label: '# of Clicks',
+        data: getDataChart()[1],
+        backgroundColor: getDataChart()[3],
+        borderColor: getDataChart()[3],
+        borderWidth: 1
+      },
+      {
+        label: '# of Views',
+        data: getDataChart()[2],
+        backgroundColor: getDataChart()[4],
+        borderColor: getDataChart()[4],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
