@@ -44,18 +44,44 @@ function randomizer(max) {
   return Math.floor(Math.random() * max);
 }
 
-function imageGenerator() {
-  var pic1 = randomizer(productsArray.length);
-  var pic2 = randomizer(productsArray.length);
-  var pic3 = randomizer(productsArray.length);
+var arrayOfIndex = function () {
+  var array = [];
+  for (var i = 0; i < productsArray.length; i++) {
+    array.push(i);
+  }
+  return array;
+}();
 
-  while (pic1 === pic2) {
-    pic2 = randomizer(productsArray.length);
+var arrayOfIndexCopy = arrayOfIndex;
+
+function imageGeneratorV2() {
+  // copy array of index
+
+  // if copy of indexArray length is more than 3
+  // take array of index
+  // assign pic1 with random number through array of index
+  // splice that number out
+  // assign2 pic2 with random number through array of index
+  // splice that out
+  // assign pic3 with random number through array
+  // splice that out
+
+  // otherwise
+  // copy of array is reassigned the value of array of index
+  while (arrayOfIndexCopy.length < 3) {
+    arrayOfIndexCopy = arrayOfIndex;
   }
-  while (pic2 === pic3 || pic1 === pic3) {
-    pic3 = randomizer(productsArray.length);
-  }
-  console.log(pic1, pic2, pic3);
+  var index1 = randomizer(arrayOfIndexCopy.length);
+  arrayOfIndexCopy.splice(index1, 1);
+  var pic1 = productsArray[index1];
+
+  var index2 = randomizer(arrayOfIndexCopy.length);
+  arrayOfIndexCopy.splice(index2, 1);
+  var pic2 = productsArray[index1];
+
+  var index3 = randomizer(arrayOfIndexCopy.length);
+  arrayOfIndexCopy.splice(index3, 1);
+  var pic3 = productsArray[index3];
 
   img1.src = productsArray[pic1].src;
   img1.title = productsArray[pic1].name;
@@ -69,6 +95,35 @@ function imageGenerator() {
   img3.title = productsArray[pic3].name;
   productsArray[pic3].shown++;
 }
+
+console.log('arrayOfIndex: ' + arrayOfIndex);
+console.log('arrayOfIndexCopy: ' + arrayOfIndexCopy);
+
+
+// function imageGenerator() {
+//   var pic1 = randomizer(productsArray.length);
+//   var pic2 = randomizer(productsArray.length);
+//   var pic3 = randomizer(productsArray.length);
+
+//   while (pic1 === pic2) {
+//     pic2 = randomizer(productsArray.length);
+//   }
+//   while (pic2 === pic3 || pic1 === pic3) {
+//     pic3 = randomizer(productsArray.length);
+//   }
+
+//   img1.src = productsArray[pic1].src;
+//   img1.title = productsArray[pic1].name;
+//   productsArray[pic1].shown++;
+
+//   img2.src = productsArray[pic2].src;
+//   img2.title = productsArray[pic2].name;
+//   productsArray[pic2].shown++;
+
+//   img3.src = productsArray[pic3].src;
+//   img3.title = productsArray[pic3].name;
+//   productsArray[pic3].shown++;
+// }
 
 function generateList() {
   for (var j = 0; j < productsArray.length; j++) {
