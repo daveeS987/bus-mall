@@ -48,7 +48,6 @@ function randomizer(max) {
 }
 
 //////     Version 1 of Image Generator    /////
-
 // var pic1Previous;
 // var pic2Previous;
 // var pic3Previous;
@@ -87,13 +86,13 @@ function randomizer(max) {
 //   pic3Previous = pic3;
 // }
 
-var generateArrayOfIndex = function () {
+function generateArrayOfIndex() {
   var array = [];
   for (var i = 0; i < productsArray.length; i++) {
     array.push(i);
   }
   return array;
-};
+}
 var arrayOfIndex = generateArrayOfIndex();
 
 function imageGeneratorV2() {
@@ -151,20 +150,15 @@ function handleClick(event) {
   if (clickCounter === 0) {
     stopClicking();
     generateList();
-    // container.textContent = '';
     main.textContent = '';
     footer.textContent = '';
     renderChart();
   }
-  // imageGenerator();
   imageGeneratorV2();
 }
 
 container.addEventListener('click', handleClick);
-// imageGenerator();
 imageGeneratorV2();
-
-
 
 
 // seed Data
