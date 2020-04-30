@@ -40,62 +40,14 @@ new Product('water-can', './img/water-can.jpg');
 new Product('wine-glass', './img/wine-glass.jpg');
 
 
-// function randomizer(max) {
-//   return Math.floor(Math.random() * max);
-// }
+function randomizer(max) {
+  return Math.floor(Math.random() * max);
+}
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-
-var generateArrayOfIndex = function () {
-  var array = [];
-  for (var i = 0; i < productsArray.length; i++) {
-    array.push(i);
-  }
-  return array;
-};
-var arrayOfIndex = generateArrayOfIndex();
-var copyArrayOfIndex = [1, 2];
-copyArrayOfIndex = arrayOfIndex;
-console.log('copyArrayOfIndex: ' + copyArrayOfIndex);
-
-function imageGeneratorV2() {
-
-  while (arrayOfIndex.length < 3) {
-    arrayOfIndex = generateArrayOfIndex();
-    console.log('after while: ' + arrayOfIndex);
-  }
-
-  var index1 = getRandomIntInclusive(0, arrayOfIndex.length-1);
-  var pic1 = arrayOfIndex[index1];
-  arrayOfIndex.splice(index1, 1);
-  console.log('arrayOfIndex: ' + arrayOfIndex);
-
-  var index2 = getRandomIntInclusive(0, arrayOfIndex.length-1);
-  var pic2 = arrayOfIndex[index2];
-  arrayOfIndex.splice(index2, 1);
-  console.log('arrayOfIndex: ' + arrayOfIndex);
-
-  var index3 = getRandomIntInclusive(0, arrayOfIndex.length-1);
-  var pic3 = arrayOfIndex[index3];
-  arrayOfIndex.splice(index3, 1);
-  console.log('arrayOfIndex: ' + arrayOfIndex);
-
-  img1.src = productsArray[pic1].src;
-  img1.title = productsArray[pic1].name;
-  productsArray[pic1].shown++;
-
-  img2.src = productsArray[pic2].src;
-  img2.title = productsArray[pic2].name;
-  productsArray[pic2].shown++;
-
-  img3.src = productsArray[pic3].src;
-  img3.title = productsArray[pic3].name;
-  productsArray[pic3].shown++;
 }
 
 
@@ -123,6 +75,72 @@ function imageGeneratorV2() {
 //   img3.title = productsArray[pic3].name;
 //   productsArray[pic3].shown++;
 // }
+
+
+
+var generateArrayOfIndex = function () {
+  var array = [];
+  for (var i = 0; i < productsArray.length; i++) {
+    array.push(i);
+  }
+  return array;
+};
+var arrayOfIndex = generateArrayOfIndex();
+
+
+function imageGeneratorV2() {
+  while (arrayOfIndex.length < 3) {
+    arrayOfIndex = generateArrayOfIndex();
+    console.log('after while: ' + arrayOfIndex);
+  }
+
+  var index1 = getRandomIntInclusive(0, arrayOfIndex.length-1);
+  var pic1 = arrayOfIndex[index1];
+  arrayOfIndex.splice(index1, 1);
+
+  var index2 = getRandomIntInclusive(0, arrayOfIndex.length-1);
+  var pic2 = arrayOfIndex[index2];
+  arrayOfIndex.splice(index2, 1);
+
+  var index3 = getRandomIntInclusive(0, arrayOfIndex.length-1);
+  var pic3 = arrayOfIndex[index3];
+  arrayOfIndex.splice(index3, 1);
+
+  img1.src = productsArray[pic1].src;
+  img1.title = productsArray[pic1].name;
+  productsArray[pic1].shown++;
+
+  img2.src = productsArray[pic2].src;
+  img2.title = productsArray[pic2].name;
+  productsArray[pic2].shown++;
+
+  img3.src = productsArray[pic3].src;
+  img3.title = productsArray[pic3].name;
+  productsArray[pic3].shown++;
+}
+
+
+
+
+// var productsArrayCopy = productsArray;
+// function imageGeneratorV3() {
+
+
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function generateList() {
   for (var j = 0; j < productsArray.length; j++) {
