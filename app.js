@@ -13,34 +13,57 @@ var footer = document.getElementById('footer');
 var productsArray = [];
 var clickCounter = 25;
 
-function Product(name, src) {
+function Product(name, src, shown = 0, clicked = 0) {
   this.name = name;
   this.src = src;
-  this.shown = 0;
-  this.clicked = 0;
+  this.shown = shown;
+  this.clicked = clicked;
   productsArray.push(this);
 }
 
-new Product('bag', './img/bag.jpg');
-new Product('banana', './img/banana.jpg');
-new Product('bathroom', './img/bathroom.jpg');
-new Product('boots', './img/boots.jpg');
-new Product('breakfast', './img/breakfast.jpg');
-new Product('bubblegum', './img/bubblegum.jpg');
-new Product('chair', './img/chair.jpg');
-new Product('cthulhu', './img/cthulhu.jpg');
-new Product('dog-duck', './img/dog-duck.jpg');
-new Product('dragon', './img/dragon.jpg');
-new Product('pen', './img/pen.jpg');
-new Product('pet-sweep', './img/pet-sweep.jpg');
-new Product('scissors', './img/scissors.jpg');
-new Product('shark', './img/shark.jpg');
-new Product('sweep', './img/sweep.png');
-new Product('tauntaun', './img/tauntaun.jpg');
-new Product('unicorn', './img/unicorn.jpg');
-new Product('usb', './img/usb.gif');
-new Product('water-can', './img/water-can.jpg');
-new Product('wine-glass', './img/wine-glass.jpg');
+
+// Save to local storage
+function saveLocalStorage() {
+  var savedProducts = JSON.stringify(productsArray);
+  localStorage.setItem('Products', savedProducts);
+}
+
+function loadLocalStorage() {
+  // check to see if there's stuff in local storage
+  // if there is, then we grab it and use the data
+  // if local storage is empty, proceed as its the first time
+  if (localStorage.getItem('Products')) {
+    var localStorageProducts = JSON.parse(localStorage.getItem('Products'));
+    for (var i = 0; i < localStorageProducts.length; i++) {
+      new Product(localStorageProducts[i].name, localStorageProducts[i].src, localStorageProducts[i].shown, localStorageProducts[i].clicked);
+    }
+  }
+  else {
+    new Product('bag', './img/bag.jpg');
+    new Product('banana', './img/banana.jpg');
+    new Product('bathroom', './img/bathroom.jpg');
+    new Product('boots', './img/boots.jpg');
+    new Product('breakfast', './img/breakfast.jpg');
+    new Product('bubblegum', './img/bubblegum.jpg');
+    new Product('chair', './img/chair.jpg');
+    new Product('cthulhu', './img/cthulhu.jpg');
+    new Product('dog-duck', './img/dog-duck.jpg');
+    new Product('dragon', './img/dragon.jpg');
+    new Product('pen', './img/pen.jpg');
+    new Product('pet-sweep', './img/pet-sweep.jpg');
+    new Product('scissors', './img/scissors.jpg');
+    new Product('shark', './img/shark.jpg');
+    new Product('sweep', './img/sweep.png');
+    new Product('tauntaun', './img/tauntaun.jpg');
+    new Product('unicorn', './img/unicorn.jpg');
+    new Product('usb', './img/usb.gif');
+    new Product('water-can', './img/water-can.jpg');
+    new Product('wine-glass', './img/wine-glass.jpg');
+  }
+  imageGeneratorV2();
+}
+
+
 
 
 function randomizer(max) {
@@ -149,7 +172,8 @@ function handleClick(event) {
   clickCounter--;
   if (clickCounter === 0) {
     stopClicking();
-    generateList();
+    // generateList();
+    saveLocalStorage();
     main.textContent = '';
     footer.textContent = '';
     renderChart();
@@ -158,7 +182,7 @@ function handleClick(event) {
 }
 
 container.addEventListener('click', handleClick);
-imageGeneratorV2();
+loadLocalStorage();
 
 
 // seed Data
