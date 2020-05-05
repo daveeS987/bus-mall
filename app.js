@@ -109,6 +109,7 @@ function randomizer(max) {
 //   pic3Previous = pic3;
 // }
 
+// Version 2 of Image Generator
 function generateArrayOfIndex() {
   var array = [];
   for (var i = 0; i < productsArray.length; i++) {
