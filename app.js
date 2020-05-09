@@ -13,6 +13,8 @@ var footer = document.getElementById('footer');
 var productsArray = [];
 var clickCounter = 25;
 
+
+// Constructor Function
 function Product(name, src, shown = 0, clicked = 0) {
   this.name = name;
   this.src = src;
@@ -28,6 +30,8 @@ function saveLocalStorage() {
   localStorage.setItem('Products', savedProducts);
 }
 
+
+// Load Storage if there was any data
 function loadLocalStorage() {
   // check to see if there's stuff in local storage
   // if there is, then we grab it and use the data
@@ -71,55 +75,15 @@ function randomizer(max) {
 }
 
 
-
-// Version 2 of Image Generator
-// function generateArrayOfIndex() {
-//   var array = [];
-//   for (var i = 0; i < productsArray.length; i++) {
-//     array.push(i);
-//   }
-//   return array;
-// }
-// var arrayOfIndex = generateArrayOfIndex();
-
-// function imageGeneratorV3() {
-//   while (arrayOfIndex.length < 3) {
-//     arrayOfIndex = generateArrayOfIndex();
-//   }
-
-//   var index1 = randomizer(arrayOfIndex.length);
-//   var pic1 = arrayOfIndex[index1];
-//   arrayOfIndex.splice(index1, 1);
-
-//   var index2 = randomizer(arrayOfIndex.length);
-//   var pic2 = arrayOfIndex[index2];
-//   arrayOfIndex.splice(index2, 1);
-
-//   var index3 = randomizer(arrayOfIndex.length);
-//   var pic3 = arrayOfIndex[index3];
-//   arrayOfIndex.splice(index3, 1);
-
-//   img1.src = productsArray[pic1].src;
-//   img1.title = productsArray[pic1].name;
-//   productsArray[pic1].shown++;
-
-//   img2.src = productsArray[pic2].src;
-//   img2.title = productsArray[pic2].name;
-//   productsArray[pic2].shown++;
-
-//   img3.src = productsArray[pic3].src;
-//   img3.title = productsArray[pic3].name;
-//   productsArray[pic3].shown++;
-// }
-
 var previouslySelected = [];
+
+// Generate Images
 function imageGeneratorV2() {
   do {
     var pic1 = randomizer(productsArray.length);
     var pic2 = randomizer(productsArray.length);
     var pic3 = randomizer(productsArray.length);
   } while (previouslySelected.includes(pic1) || previouslySelected.includes(pic2) || previouslySelected.includes(pic3) || pic1 === pic2 || pic1 === pic3 || pic2 === pic3);
-
 
   img1.src = productsArray[pic1].src;
   img1.title = productsArray[pic1].name;
@@ -134,23 +98,24 @@ function imageGeneratorV2() {
   productsArray[pic3].shown++;
 
   previouslySelected = [pic1, pic2, pic3];
-
 }
 
+// Generates List of Items clicked and viewed
+function generateList() {
+  for (var j = 0; j < productsArray.length; j++) {
+    var listItem = document.createElement('li');
+    listItem.textContent = `${productsArray[j].name.toUpperCase()} : ${productsArray[j].clicked} votes. Shown ${productsArray[j].shown} times`;
+    listEl.appendChild(listItem);
+  }
+}
 
-// function generateList() {
-//   for (var j = 0; j < productsArray.length; j++) {
-//     var listItem = document.createElement('li');
-//     listItem.textContent = `${productsArray[j].name.toUpperCase()} : ${productsArray[j].clicked} votes. Shown ${productsArray[j].shown} times`;
-//     listEl.appendChild(listItem);
-//   }
-// }
 
 function stopClicking() {
   container.removeEventListener('click', handleClick);
   console.log('done');
 }
 
+// Function for Event Listener
 function handleClick(event) {
   var clickedProduct = event.target.title;
   for (var i = 0; i < productsArray.length; i++) {
@@ -161,7 +126,7 @@ function handleClick(event) {
   clickCounter--;
   if (clickCounter === 0) {
     stopClicking();
-    // generateList();
+    generateList();
     saveLocalStorage();
     main.textContent = '';
     footer.textContent = '';
@@ -170,11 +135,12 @@ function handleClick(event) {
   imageGeneratorV2();
 }
 
+// Add Event listener
 container.addEventListener('click', handleClick);
 loadLocalStorage();
 
 
-// seed Data
+// Seed Data
 function getDataChart() {
   var namesArray = [];
   var clickedArray = [];
@@ -192,6 +158,8 @@ function getDataChart() {
   return [namesArray, clickedArray, displayedArray, clickedColorArray, displayedColorArray];
 }
 
+
+// Renders Chart
 function renderChart() {
   var ctx = document.getElementById('myChart');
   var myChart = new Chart(ctx, {
