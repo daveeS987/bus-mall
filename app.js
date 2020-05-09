@@ -70,27 +70,34 @@ function randomizer(max) {
   return Math.floor(Math.random() * max);
 }
 
-//////     Version 1 of Image Generator    /////
-// var pic1Previous;
-// var pic2Previous;
-// var pic3Previous;
 
-// function imageGenerator() {
-//   var pic1 = randomizer(productsArray.length);
-//   var pic2 = randomizer(productsArray.length);
-//   var pic3 = randomizer(productsArray.length);
 
-//   while (pic1 === pic2 || pic1 === pic3 || pic1 === pic1Previous || pic1 === pic2Previous || pic1 === pic3Previous) {
-//     pic1 = randomizer(productsArray.length);
+// Version 2 of Image Generator
+// function generateArrayOfIndex() {
+//   var array = [];
+//   for (var i = 0; i < productsArray.length; i++) {
+//     array.push(i);
+//   }
+//   return array;
+// }
+// var arrayOfIndex = generateArrayOfIndex();
+
+// function imageGeneratorV3() {
+//   while (arrayOfIndex.length < 3) {
+//     arrayOfIndex = generateArrayOfIndex();
 //   }
 
-//   while (pic2 === pic1 || pic2 === pic3 || pic2 === pic1Previous || pic2 === pic2Previous || pic2 === pic3Previous) {
-//     pic2 = randomizer(productsArray.length);
-//   }
+//   var index1 = randomizer(arrayOfIndex.length);
+//   var pic1 = arrayOfIndex[index1];
+//   arrayOfIndex.splice(index1, 1);
 
-//   while (pic3 === pic2 || pic3 === pic1 || pic3 === pic1Previous || pic3 === pic2Previous || pic3 === pic3Previous) {
-//     pic3 = randomizer(productsArray.length);
-//   }
+//   var index2 = randomizer(arrayOfIndex.length);
+//   var pic2 = arrayOfIndex[index2];
+//   arrayOfIndex.splice(index2, 1);
+
+//   var index3 = randomizer(arrayOfIndex.length);
+//   var pic3 = arrayOfIndex[index3];
+//   arrayOfIndex.splice(index3, 1);
 
 //   img1.src = productsArray[pic1].src;
 //   img1.title = productsArray[pic1].name;
@@ -103,38 +110,16 @@ function randomizer(max) {
 //   img3.src = productsArray[pic3].src;
 //   img3.title = productsArray[pic3].name;
 //   productsArray[pic3].shown++;
-
-//   pic1Previous = pic1;
-//   pic2Previous = pic2;
-//   pic3Previous = pic3;
 // }
 
-// Version 2 of Image Generator
-function generateArrayOfIndex() {
-  var array = [];
-  for (var i = 0; i < productsArray.length; i++) {
-    array.push(i);
-  }
-  return array;
-}
-var arrayOfIndex = generateArrayOfIndex();
-
+var previouslySelected = [];
 function imageGeneratorV2() {
-  while (arrayOfIndex.length < 3) {
-    arrayOfIndex = generateArrayOfIndex();
-  }
+  do {
+    var pic1 = randomizer(productsArray.length);
+    var pic2 = randomizer(productsArray.length);
+    var pic3 = randomizer(productsArray.length);
+  } while (previouslySelected.includes(pic1) || previouslySelected.includes(pic2) || previouslySelected.includes(pic3) || pic1 === pic2 || pic1 === pic3 || pic2 === pic3);
 
-  var index1 = randomizer(arrayOfIndex.length);
-  var pic1 = arrayOfIndex[index1];
-  arrayOfIndex.splice(index1, 1);
-
-  var index2 = randomizer(arrayOfIndex.length);
-  var pic2 = arrayOfIndex[index2];
-  arrayOfIndex.splice(index2, 1);
-
-  var index3 = randomizer(arrayOfIndex.length);
-  var pic3 = arrayOfIndex[index3];
-  arrayOfIndex.splice(index3, 1);
 
   img1.src = productsArray[pic1].src;
   img1.title = productsArray[pic1].name;
@@ -147,16 +132,19 @@ function imageGeneratorV2() {
   img3.src = productsArray[pic3].src;
   img3.title = productsArray[pic3].name;
   productsArray[pic3].shown++;
+
+  previouslySelected = [pic1, pic2, pic3];
+
 }
 
 
-function generateList() {
-  for (var j = 0; j < productsArray.length; j++) {
-    var listItem = document.createElement('li');
-    listItem.textContent = `${productsArray[j].name.toUpperCase()} : ${productsArray[j].clicked} votes. Shown ${productsArray[j].shown} times`;
-    listEl.appendChild(listItem);
-  }
-}
+// function generateList() {
+//   for (var j = 0; j < productsArray.length; j++) {
+//     var listItem = document.createElement('li');
+//     listItem.textContent = `${productsArray[j].name.toUpperCase()} : ${productsArray[j].clicked} votes. Shown ${productsArray[j].shown} times`;
+//     listEl.appendChild(listItem);
+//   }
+// }
 
 function stopClicking() {
   container.removeEventListener('click', handleClick);
